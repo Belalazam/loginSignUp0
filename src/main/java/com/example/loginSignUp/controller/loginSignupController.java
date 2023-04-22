@@ -5,15 +5,13 @@ import com.example.loginSignUp.repo.UserRepository;
 import com.example.loginSignUp.service.EmailService;
 import dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/auth")
 public class loginSignupController{
 
@@ -84,7 +82,7 @@ public class loginSignupController{
             }
             String randomCode = generateRandomCode();
             user.setPassword(randomCode);
-            emailService.sendSimpleMessage(otpRequest.getEmail(),"confirmation code",randomCode);
+            emailService.sendEmail(otpRequest.getEmail(),"confirmation code","your otp is:" + randomCode);
             userRepository.save(user);
         }
         catch (Exception e)
